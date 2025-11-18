@@ -32,67 +32,507 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <style>
-    :root { --indigo:#667eea; --purple:#764ba2; --amber:#ffc107; --mint:#2c5f2d; --paper:#f8f9fa; --ink:#222; }
-    *{ box-sizing:border-box; } html,body{ height:100%; }
-    body{ margin:0; background:linear-gradient(135deg,#eef2f7 0%,#f5f7fb 100%); color:var(--ink);
-          font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC","PingFang TC","Heiti TC","Microsoft JhengHei",Arial,sans-serif;
-          line-height:1.6; padding:32px; }
-    .container{ max-width:1100px; margin:0 auto; background:#fff; border-radius:20px; box-shadow:0 20px 50px rgba(20,40,90,.08); overflow:hidden; }
-    .cover{ padding:64px 40px; background:radial-gradient(1200px 400px at 10% -10%,rgba(102,126,234,.25),transparent 60%),radial-gradient(900px 400px at 90% 0,rgba(118,75,162,.25),transparent 60%),linear-gradient(135deg,#f6f9ff 0%,#f8f1ff 100%); text-align:center; }
-    .cover h1{ margin:0 0 10px; font-size:clamp(28px,4.5vw,44px); letter-spacing:.5px; }
-    .cover .subtitle{ font-size:clamp(16px,2.8vw,22px); opacity:.85; margin-bottom:12px; }
-    .cover .family{ font-size:16px; opacity:.9; }
-    .content{ padding:8px 24px 40px; }
-    .section{ background:#fff; margin:24px 0; padding:28px 20px; border-radius:16px; box-shadow:0 6px 18px rgba(0,0,0,.06); }
-    .section-title{ display:flex; align-items:center; gap:10px; font-size:22px; margin:0 0 18px; }
-    .section-title .emoji{ display:inline-grid; place-items:center; width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--indigo) 0%,var(--purple) 100%); color:#fff; font-size:18px; }
-    .info-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
-    .info-card{ background:var(--paper); border-radius:14px; padding:18px; box-shadow:0 4px 12px rgba(0,0,0,.06); }
-    .info-card .emoji{ font-size:22px; margin-bottom:6px; }
-    .info-card .label{ color:#6b7280; font-size:13px; }
-    .info-card .value{ font-size:20px; font-weight:700; margin-top:4px; }
-    .timeline{ position:relative; padding-left:40px; }
-    .timeline::before{ content:''; position:absolute; left:15px; top:0; bottom:0; width:3px; background:linear-gradient(to bottom,var(--indigo),var(--purple)); }
-    .timeline-item{ position:relative; margin-bottom:40px; padding:25px; background:#f8f9fa; border-radius:15px; box-shadow:0 3px 10px rgba(0,0,0,.1); }
-    .timeline-item::before{ content:''; position:absolute; left:-33px; top:30px; width:15px; height:15px; border-radius:50%; background:#fff; border:4px solid var(--indigo); box-shadow:0 0 0 4px #fff; }
-    .timeline-day{ font-size:1.1rem; color:var(--indigo); font-weight:800; margin-bottom:6px; }
-    .timeline-date{ color:#666; font-size:.95em; margin-bottom:10px; }
-    .timeline-content{ color:#333; line-height:1.8; }
-    .timeline-highlight{ background:#fff3cd; padding:10px 15px; border-radius:8px; margin-top:14px; border-left:4px solid var(--amber); }
-    .attractions{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
-    .attraction-card{ background:#fff; border-radius:15px; overflow:hidden; box-shadow:0 5px 20px rgba(0,0,0,.1); transition:transform .3s; }
-    .attraction-card:hover{ transform:translateY(-6px); }
-    .attraction-header{ color:#fff; padding:20px; text-align:center; }
-    .attraction-header .rank{ font-size:2.6em; font-weight:800; opacity:.28; }
-    .attraction-header .name{ font-size:1.35em; font-weight:800; margin:8px 0; }
-    .attraction-body{ padding:18px; }
-    .attraction-rating{ color:var(--amber); font-size:1.1em; margin-bottom:8px; }
-    .attraction-info{ color:#666; line-height:1.6; }
+    :root {
+      --indigo:#667eea;
+      --purple:#764ba2;
+      --amber:#ffc107;
+      --mint:#2c5f2d;
+      --paper:#f8f9fa;
+      --ink:#222;
+    }
 
-    /* 表格：手機可滑動 */
-    .table-wrap{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
-    .budget-table{ width:100%; border-collapse:collapse; box-shadow:0 5px 15px rgba(0,0,0,.08); border-radius:10px; overflow:hidden; min-width:740px; }
-    .budget-table thead{ background:linear-gradient(135deg,var(--indigo) 0%,var(--purple) 100%); color:#fff; }
-    .budget-table th{ padding:16px; text-align:left; font-size:1.02em; }
-    .budget-table td{ padding:14px 16px; border-bottom:1px solid #eee; }
-    .budget-table tbody tr:hover{ background:#f8f9fa; }
-    .budget-total{ background:#fff3cd; font-weight:800; font-size:1.12em; }
-    .budget-highlight{ background:#d4edda; font-weight:800; }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
 
-    .feature-tags{ display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
-    .tag{ background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%); color:#fff; padding:10px 14px; border-radius:999px; font-size:.95em; box-shadow:0 3px 10px rgba(0,0,0,.18); }
-    .tips-box{ background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%); padding:22px; border-radius:15px; margin:18px 0; }
-    .tips-box h3{ color:#d84315; margin:0 0 14px; font-size:1.2em; }
-    .tips-box ul{ list-style:none; padding:0; margin:0; }
-    .tips-box li{ padding:8px 0 8px 30px; position:relative; line-height:1.6; }
-    .tips-box li::before{ content:'✓'; position:absolute; left:0; color:#d84315; font-weight:800; font-size:1.1em; }
+    body{
+      margin:0;
+      background:linear-gradient(135deg,#eef2f7 0%,#f5f7fb 100%);
+      color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC","PingFang TC","Heiti TC","Microsoft JhengHei",Arial,sans-serif;
+      line-height:1.6;
+      padding:32px;
+    }
 
-    .footer{ background:var(--mint); color:#fff; text-align:center; padding:32px; font-size:1.05em; }
-    .footer .heart{ color:#ff6b6b; font-size:1.5em; animation:heartbeat 1.5s ease-in-out infinite; }
-    @keyframes heartbeat{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.1);} }
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      background:#fff;
+      border-radius:20px;
+      box-shadow:0 20px 50px rgba(20,40,90,.08);
+      overflow:hidden;
+    }
 
-    @media (max-width:640px){ body{ padding:14px;} .content{ padding:0 14px 28px;} .section{ padding:20px 14px;} .timeline{ padding-left:28px;} .timeline::before{ left:10px;} .timeline-item::before{ left:-28px;} }
-    @media print{ body{ background:#fff; padding:0;} .container{ border-radius:0; box-shadow:none;} .section{ break-inside:avoid; box-shadow:none;} .cover{ padding:40px 24px;} .footer{ color:#222; background:#fff; border-top:1px solid #eee;} .section-title .emoji{ background:#000; color:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact;} }
+    .cover{
+      padding:64px 40px;
+      background:
+        radial-gradient(1200px 400px at 10% -10%,rgba(102,126,234,.25),transparent 60%),
+        radial-gradient(900px 400px at 90% 0,rgba(118,75,162,.25),transparent 60%),
+        linear-gradient(135deg,#f6f9ff 0%,#f8f1ff 100%);
+      text-align:center;
+    }
+
+    .cover h1{
+      margin:0 0 10px;
+      font-size:clamp(28px,4.5vw,44px);
+      letter-spacing:.5px;
+    }
+
+    .cover .subtitle{
+      font-size:clamp(16px,2.8vw,22px);
+      opacity:.85;
+      margin-bottom:12px;
+    }
+
+    .cover .family{
+      font-size:16px;
+      opacity:.9;
+    }
+
+    .content{
+      padding:8px 24px 40px;
+    }
+
+    .section{
+      background:#fff;
+      margin:24px 0;
+      padding:28px 20px;
+      border-radius:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,.06);
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:22px;
+      margin:0 0 18px;
+    }
+
+    .section-title .emoji{
+      display:inline-grid;
+      place-items:center;
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--indigo) 0%,var(--purple) 100%);
+      color:#fff;
+      font-size:18px;
+    }
+
+    .info-cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+    }
+
+    .info-card{
+      background:var(--paper);
+      border-radius:14px;
+      padding:18px;
+      box-shadow:0 4px 12px rgba(0,0,0,.06);
+    }
+
+    .info-card .emoji{
+      font-size:22px;
+      margin-bottom:6px;
+    }
+
+    .info-card .label{
+      color:#6b7280;
+      font-size:13px;
+    }
+
+    .info-card .value{
+      font-size:20px;
+      font-weight:700;
+      margin-top:4px;
+    }
+
+    .timeline{
+      position:relative;
+      padding-left:40px;
+    }
+
+    .timeline::before{
+      content:'';
+      position:absolute;
+      left:15px;
+      top:0;
+      bottom:0;
+      width:3px;
+      background:linear-gradient(to bottom,var(--indigo),var(--purple));
+    }
+
+    .timeline-item{
+      position:relative;
+      margin-bottom:40px;
+      padding:25px;
+      background:#f8f9fa;
+      border-radius:15px;
+      box-shadow:0 3px 10px rgba(0,0,0,.1);
+    }
+
+    .timeline-item::before{
+      content:'';
+      position:absolute;
+      left:-33px;
+      top:30px;
+      width:15px;
+      height:15px;
+      border-radius:50%;
+      background:#fff;
+      border:4px solid var(--indigo);
+      box-shadow:0 0 0 4px #fff;
+    }
+
+    .timeline-day{
+      font-size:1.1rem;
+      color:var(--indigo);
+      font-weight:800;
+      margin-bottom:6px;
+    }
+
+    .timeline-date{
+      color:#666;
+      font-size:.95em;
+      margin-bottom:10px;
+    }
+
+    .timeline-content{
+      color:#333;
+      line-height:1.8;
+    }
+
+    .timeline-highlight{
+      background:#fff3cd;
+      padding:10px 15px;
+      border-radius:8px;
+      margin-top:14px;
+      border-left:4px solid var(--amber);
+    }
+
+    .attractions{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    }
+
+    .attraction-card{
+      background:#fff;
+      border-radius:15px;
+      overflow:hidden;
+      box-shadow:0 5px 20px rgba(0,0,0,.1);
+      transition:transform .3s;
+    }
+
+    .attraction-card:hover{
+      transform:translateY(-6px);
+    }
+
+    .attraction-header{
+      color:#fff;
+      padding:20px;
+      text-align:center;
+    }
+
+    .attraction-header .rank{
+      font-size:2.6em;
+      font-weight:800;
+      opacity:.28;
+    }
+
+    .attraction-header .name{
+      font-size:1.35em;
+      font-weight:800;
+      margin:8px 0;
+    }
+
+    .attraction-body{
+      padding:18px;
+    }
+
+    .attraction-rating{
+      color:var(--amber);
+      font-size:1.1em;
+      margin-bottom:8px;
+    }
+
+    .attraction-info{
+      color:#666;
+      line-height:1.6;
+    }
+
+    /* ---- 表格：手機可滑動 + 藍綠色系 + 滑動提示 ---- */
+    .table-wrap{
+      position:relative;
+      width:100%;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .budget-table{
+      width:100%;
+      border-collapse:collapse;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 5px 15px rgba(15,23,42,.08);
+      background:#ffffff;
+      min-width:600px;
+    }
+
+    .budget-table thead{
+      background:linear-gradient(135deg,#0f766e 0%,#0ea5e9 100%);
+      color:#fff;
+    }
+
+    .budget-table th,
+    .budget-table td{
+      text-align:left;
+      padding:14px 16px;
+      font-size:0.95rem;
+      white-space:nowrap;
+      border-bottom:1px solid #eef2f7;
+    }
+
+    .budget-table tbody tr:hover{
+      background:#f8fafc;
+    }
+
+    .budget-total{
+      background:#e0f2f1;
+      font-weight:800;
+      font-size:1.05rem;
+    }
+
+    .budget-highlight{
+      background:#dbeafe;
+      font-weight:800;
+    }
+
+    @media (max-width:768px){
+      .budget-table{
+        min-width:520px;
+      }
+
+      .budget-table th,
+      .budget-table td{
+        padding:10px 12px;
+        font-size:0.85rem;
+      }
+
+      .table-wrap::after{
+        content:"← 左右滑動看完整內容";
+        position:absolute;
+        top:6px;
+        right:12px;
+        font-size:12px;
+        padding:4px 10px;
+        border-radius:999px;
+        background:linear-gradient(135deg,#0f766e 0%,#0ea5e9 100%);
+        color:#fff;
+        box-shadow:0 3px 10px rgba(15,23,42,.2);
+        pointer-events:none;
+        white-space:nowrap;
+        animation:fadeScrollHint 4s forwards;
+        z-index:3;
+      }
+    }
+
+    @keyframes fadeScrollHint{
+      0%{ opacity:1; }
+      80%{ opacity:1; }
+      100%{ opacity:0; }
+    }
+
+    .feature-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:14px 0;
+    }
+
+    .tag{
+      background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:.95em;
+      box-shadow:0 3px 10px rgba(0,0,0,.18);
+    }
+
+    .tips-box{
+      background:linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%);
+      padding:22px;
+      border-radius:15px;
+      margin:18px 0;
+    }
+
+    .tips-box h3{
+      color:#d84315;
+      margin:0 0 14px;
+      font-size:1.2em;
+    }
+
+    .tips-box ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+
+    .tips-box li{
+      padding:8px 0 8px 30px;
+      position:relative;
+      line-height:1.6;
+    }
+
+    .tips-box li::before{
+      content:'✓';
+      position:absolute;
+      left:0;
+      color:#d84315;
+      font-weight:800;
+      font-size:1.1em;
+    }
+
+    .footer{
+      background:var(--mint);
+      color:#fff;
+      text-align:center;
+      padding:32px;
+      font-size:1.05em;
+    }
+
+    .footer .heart{
+      color:#ff6b6b;
+      font-size:1.5em;
+      animation:heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat{
+      0%,100%{ transform:scale(1); }
+      50%{ transform:scale(1.1); }
+    }
+
+    /* 必看景點 TOP5 Grid */
+    .spot-grid-wrapper{
+      max-width:1120px;
+      margin:32px auto 8px;
+      padding:0 16px;
+    }
+
+    .spot-grid{
+      display:grid;
+      gap:20px;
+    }
+
+    @media (max-width:639px){
+      .spot-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media (min-width:640px) and (max-width:1023px){
+      .spot-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+    }
+
+    @media (min-width:1024px){
+      .spot-grid{
+        grid-template-columns:repeat(5,minmax(0,1fr));
+      }
+    }
+
+    .spot-card{
+      background:#ffffff;
+      border-radius:16px;
+      padding:12px 12px 14px;
+      box-shadow:0 12px 30px rgba(15,23,42,0.08);
+      display:flex;
+      flex-direction:column;
+      transition:transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .spot-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 38px rgba(15,23,42,0.14);
+    }
+
+    .spot-card img{
+      width:100%;
+      height:150px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:10px;
+    }
+
+    .spot-title-zh{
+      font-weight:700;
+      font-size:0.98rem;
+      margin-bottom:2px;
+      color:#111827;
+    }
+
+    .spot-title-en{
+      font-size:0.8rem;
+      color:#6b7280;
+      margin-bottom:6px;
+    }
+
+    .spot-tag{
+      align-self:flex-start;
+      font-size:0.75rem;
+      padding:2px 10px;
+      border-radius:999px;
+      background:linear-gradient(120deg,#e0f2fe,#dcfce7);
+      color:#065f46;
+      font-weight:500;
+      margin-bottom:6px;
+    }
+
+    .spot-info{
+      font-size:0.8rem;
+      color:#4b5563;
+      margin-top:auto;
+    }
+
+    @media (max-width:640px){
+      body{ padding:14px; }
+      .content{ padding:0 14px 28px; }
+      .section{ padding:20px 14px; }
+      .timeline{ padding-left:28px; }
+      .timeline::before{ left:10px; }
+      .timeline-item::before{ left:-28px; }
+    }
+
+    @media print{
+      body{
+        background:#fff;
+        padding:0;
+      }
+      .container{
+        border-radius:0;
+        box-shadow:none;
+      }
+      .section{
+        break-inside:avoid;
+        box-shadow:none;
+      }
+      .cover{
+        padding:40px 24px;
+      }
+      .footer{
+        color:#222;
+        background:#fff;
+        border-top:1px solid #eee;
+      }
+      .section-title .emoji{
+        background:#000;
+        color:#fff;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+      }
+    }
   </style>
 </head>
 <body>
@@ -109,10 +549,30 @@
       <div class="section">
         <h2 class="section-title"><span class="emoji">📋</span>行程基本資訊</h2>
         <div class="info-cards">
-          <div class="info-card"><div class="emoji">📅</div><div class="label">出發日期</div><div class="value">2026/9/14</div><div class="label" style="margin-top: 10px;">週一出發</div></div>
-          <div class="info-card"><div class="emoji">🕐</div><div class="label">旅行天數</div><div class="value">13天12夜</div><div class="label" style="margin-top: 10px;">9/14-9/26</div></div>
-          <div class="info-card"><div class="emoji">👨‍👩‍👧‍👦</div><div class="label">旅行人數</div><div class="value">4人</div><div class="label" style="margin-top: 10px;">兩對夫妻</div></div>
-          <div class="info-card"><div class="emoji">💰</div><div class="label">預算 (經濟版)</div><div class="value">29萬</div><div class="label" style="margin-top: 10px;">每人7.3萬</div></div>
+          <div class="info-card">
+            <div class="emoji">📅</div>
+            <div class="label">出發日期</div>
+            <div class="value">2026/9/14</div>
+            <div class="label" style="margin-top: 10px;">週一出發</div>
+          </div>
+          <div class="info-card">
+            <div class="emoji">🕐</div>
+            <div class="label">旅行天數</div>
+            <div class="value">13天12夜</div>
+            <div class="label" style="margin-top: 10px;">9/14-9/26</div>
+          </div>
+          <div class="info-card">
+            <div class="emoji">👨‍👩‍👧‍👦</div>
+            <div class="label">旅行人數</div>
+            <div class="value">4人</div>
+            <div class="label" style="margin-top: 10px;">兩對夫妻</div>
+          </div>
+          <div class="info-card">
+            <div class="emoji">💰</div>
+            <div class="label">預算 (經濟版)</div>
+            <div class="value">29萬</div>
+            <div class="label" style="margin-top: 10px;">每人7.3萬</div>
+          </div>
         </div>
       </div>
 
@@ -140,216 +600,222 @@
       <div class="section">
         <h2 class="section-title"><span class="emoji">🗓️</span>13天詳細行程</h2>
         <div class="timeline">
-          <div class="timeline-item"><div class="timeline-day">Day 1</div><div class="timeline-date">2026/9/14 (週一)</div><div class="timeline-content"><strong>台北 → 舊金山</strong><br>搭乘國際航班前往舊金山,抵達後搭BART進市區,入住聯合廣場附近飯店,調整時差。</div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 1</div>
+            <div class="timeline-date">2026/9/14 (週一)</div>
+            <div class="timeline-content">
+              <strong>台北 → 舊金山</strong><br>
+              搭乘國際航班前往舊金山,抵達後搭BART進市區,入住聯合廣場附近飯店,調整時差。
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 2</div><div class="timeline-date">2026/9/15 (週二)</div><div class="timeline-content"><strong>舊金山市區觀光</strong><br>搭纜車前往漁人碼頭,看超可愛的海獅、品嚐螃蟹大餐,逛Ferry Building市場,傍晚到中國城買伴手禮。<div class="timeline-highlight">🦀 必吃: 鄧金尼斯螃蟹 + 蛤蜊濃湯麵包碗</div></div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 2</div>
+            <div class="timeline-date">2026/9/15 (週二)</div>
+            <div class="timeline-content">
+              <strong>舊金山市區觀光</strong><br>
+              搭纜車前往漁人碼頭,看超可愛的海獅、品嚐螃蟹大餐,逛Ferry Building市場,傍晚到中國城買伴手禮。
+              <div class="timeline-highlight">🦀 必吃: 鄧金尼斯螃蟹 + 蛤蜊濃湯麵包碗</div>
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 3</div><div class="timeline-date">2026/9/16 (週三)</div><div class="timeline-content"><strong>舊金山 → 鹽湖城</strong><br>早上前往金門大橋拍照、九曲花街打卡,下午飛往鹽湖城,抵達後取車、前往大華超市和Walmart採購食材。<div class="timeline-highlight">📸 必拍: 金門大橋 Vista Point</div></div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 3</div>
+            <div class="timeline-date">2026/9/16 (週三)</div>
+            <div class="timeline-content">
+              <strong>舊金山 → 鹽湖城</strong><br>
+              早上前往金門大橋拍照、九曲花街打卡,下午飛往鹽湖城,抵達後取車、前往大華超市和Walmart採購食材。
+              <div class="timeline-highlight">📸 必拍: 金門大橋 Vista Point</div>
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 4</div><div class="timeline-date">2026/9/17 (週四)</div><div class="timeline-content"><strong>鹽湖城 → West Yellowstone</strong><br>開車5.5小時前往黃石公園,途中在Idaho Falls休息午餐,下午抵達並入住小木屋(連住5晚),煮第一頓中式晚餐。</div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 4</div>
+            <div class="timeline-date">2026/9/17 (週四)</div>
+            <div class="timeline-content">
+              <strong>鹽湖城 → West Yellowstone</strong><br>
+              開車5.5小時前往黃石公園,途中在Idaho Falls休息午餐,下午抵達並入住小木屋(連住5晚),煮第一頓中式晚餐。
+            </div>
+          </div>
 
-          <div class="timeline-item" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);"><div class="timeline-day">Day 5</div><div class="timeline-date">2026/9/18 (週五)</div><div class="timeline-content"><strong>黃石下圈 - 最精華的一天!</strong><br>老忠實間歇泉(每90分鐘噴發) → 大稜鏡溫泉(超夢幻彩虹色) → 餅乾盆地 → 黃石湖<div class="timeline-highlight">⭐ 本日亮點: 大稜鏡溫泉 - 北美最大溫泉,必拍!</div></div></div>
+          <div class="timeline-item" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+            <div class="timeline-day">Day 5</div>
+            <div class="timeline-date">2026/9/18 (週五)</div>
+            <div class="timeline-content">
+              <strong>黃石下圈 - 最精華的一天!</strong><br>
+              老忠實間歇泉(每90分鐘噴發) → 大稜鏡溫泉(超夢幻彩虹色) → 餅乾盆地 → 黃石湖
+              <div class="timeline-highlight">⭐ 本日亮點: 大稜鏡溫泉 - 北美最大溫泉,必拍!</div>
+            </div>
+          </div>
 
-          <div class="timeline-item" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);"><div class="timeline-day">Day 6</div><div class="timeline-date">2026/9/19 (週六)</div><div class="timeline-content"><strong>黃石上圈 - 動物與秋色</strong><br>諾里斯間歇泉 → 猛瑪溫泉台地(白色梯田) → Tower Fall → 拉馬山谷(傍晚觀動物)<div class="timeline-highlight">🦌 本日亮點: 拉馬山谷麋鹿交配季 + 白楊樹秋色!</div></div></div>
+          <div class="timeline-item" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+            <div class="timeline-day">Day 6</div>
+            <div class="timeline-date">2026/9/19 (週六)</div>
+            <div class="timeline-content">
+              <strong>黃石上圈 - 動物與秋色</strong><br>
+              諾里斯間歇泉 → 猛瑪溫泉台地(白色梯田) → Tower Fall → 拉馬山谷(傍晚觀動物)
+              <div class="timeline-highlight">🦌 本日亮點: 拉馬山谷麋鹿交配季 + 白楊樹秋色!</div>
+            </div>
+          </div>
 
-          <div class="timeline-item" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);"><div class="timeline-day">Day 7</div><div class="timeline-date">2026/9/20 (週日)</div><div class="timeline-content"><strong>黃石峽谷區</strong><br>清晨6:30海登山谷觀動物 → 回小木屋早餐 → 黃石大峽谷(Artist Point必拍) → 泥火山區<div class="timeline-highlight">📸 本日亮點: Artist Point 最經典黃石角度!</div></div></div>
+          <div class="timeline-item" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+            <div class="timeline-day">Day 7</div>
+            <div class="timeline-date">2026/9/20 (週日)</div>
+            <div class="timeline-content">
+              <strong>黃石峽谷區</strong><br>
+              清晨6:30海登山谷觀動物 → 回小木屋早餐 → 黃石大峽谷(Artist Point必拍) → 泥火山區
+              <div class="timeline-highlight">📸 本日亮點: Artist Point 最經典黃石角度!</div>
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 8</div><div class="timeline-date">2026/9/21 (週一)</div><div class="timeline-content"><strong>彈性休息日</strong><br>睡到自然醒!可以選擇完全休息、重遊最愛景點、或到鎮上的灰熊保護區。讓爸媽好好休息,洗衣服、整理照片。</div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 8</div>
+            <div class="timeline-date">2026/9/21 (週一)</div>
+            <div class="timeline-content">
+              <strong>彈性休息日</strong><br>
+              睡到自然醒!可以選擇完全休息、重遊最愛景點、或到鎮上的灰熊保護區。讓爸媽好好休息,洗衣服、整理照片。
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 9</div><div class="timeline-date">2026/9/22 (週二)</div><div class="timeline-content"><strong>黃石 → 大提頓 → Jackson</strong><br>離開黃石往南,遊覽大提頓國家公園(Jackson Lake、Jenny Lake、Mormon Row),下午抵達Jackson小鎮。<div class="timeline-highlight">🍂 本日亮點: 大提頓秋色正美,白楊樹金黃!</div></div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 9</div>
+            <div class="timeline-date">2026/9/22 (週二)</div>
+            <div class="timeline-content">
+              <strong>黃石 → 大提頓 → Jackson</strong><br>
+              離開黃石往南,遊覽大提頓國家公園(Jackson Lake、Jenny Lake、Mormon Row),下午抵達Jackson小鎮。
+              <div class="timeline-highlight">🍂 本日亮點: 大提頓秋色正美,白楊樹金黃!</div>
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 10</div><div class="timeline-date">2026/9/23 (週三)</div><div class="timeline-content"><strong>Jackson → 鹽湖城</strong><br>開車4.5小時返回鹽湖城,可選擇市區觀光(Temple Square、State Capitol)或休息。</div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 10</div>
+            <div class="timeline-date">2026/9/23 (週三)</div>
+            <div class="timeline-content">
+              <strong>Jackson → 鹽湖城</strong><br>
+              開車4.5小時返回鹽湖城,可選擇市區觀光(Temple Square、State Capitol)或休息。
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 11</div><div class="timeline-date">2026/9/24 (週四)</div><div class="timeline-content"><strong>鹽湖城 → 舊金山</strong><br>早上還車,搭機返回舊金山,下午輕鬆逛街或休息,晚餐海鮮慶祝。</div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 11</div>
+            <div class="timeline-date">2026/9/24 (週四)</div>
+            <div class="timeline-content">
+              <strong>鹽湖城 → 舊金山</strong><br>
+              早上還車,搭機返回舊金山,下午輕鬆逛街或休息,晚餐海鮮慶祝。
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 12</div><div class="timeline-date">2026/9/25 (週五)</div><div class="timeline-content"><strong>舊金山深度遊</strong><br>Union Square購物 → 雙子峰360度市景 → 金門公園日本茶園 → 慶祝晚宴(海鮮大餐)</div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 12</div>
+            <div class="timeline-date">2026/9/25 (週五)</div>
+            <div class="timeline-content">
+              <strong>舊金山深度遊</strong><br>
+              Union Square購物 → 雙子峰360度市景 → 金門公園日本茶園 → 慶祝晚宴(海鮮大餐)
+            </div>
+          </div>
 
-          <div class="timeline-item"><div class="timeline-day">Day 13</div><div class="timeline-date">2026/9/26 (週六)</div><div class="timeline-content"><strong>舊金山 → 台北</strong><br>搭機返台,結束完美的13天家庭之旅!週六抵達台北,還有週日可以休息。</div></div>
+          <div class="timeline-item">
+            <div class="timeline-day">Day 13</div>
+            <div class="timeline-date">2026/9/26 (週六)</div>
+            <div class="timeline-content">
+              <strong>舊金山 → 台北</strong><br>
+              搭機返台,結束完美的13天家庭之旅!週六抵達台北,還有週日可以休息。
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- 必看景點TOP 5 -->
-     <style>
-  /* 外層容器：置中＋預留左右空白 */
-  .spot-grid-wrapper {
-    max-width: 1120px;
-    margin: 32px auto 8px;
-    padding: 0 16px;
-  }
+      <!-- 必看景點 TOP 5 -->
+      <div class="section">
+        <h2 class="section-title"><span class="emoji">📸</span>黃石必看景點 TOP 5</h2>
+        <div class="spot-grid-wrapper">
+          <div class="spot-grid">
+            <!-- 1. 大稜鏡溫泉 -->
+            <div class="spot-card">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Aerial_image_of_Grand_Prismatic_Spring_%28view_from_the_south%29.jpg"
+                   alt="Grand Prismatic Spring 大稜鏡溫泉">
+              <div class="spot-title-zh">大稜鏡溫泉</div>
+              <div class="spot-title-en">Grand Prismatic Spring</div>
+              <div class="spot-tag">Day 5・必拍景點 #1</div>
+              <div class="spot-info">
+                北美最大溫泉，夢幻彩虹色，一定要走到觀景台俯瞰全景。
+              </div>
+            </div>
 
-  .spot-grid {
-    display: grid;
-    gap: 20px;
-  }
+            <!-- 2. 老忠實間歇泉 -->
+            <div class="spot-card">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Old_Faithful_Geyser_Yellowstone_National_Park.jpg/960px-Old_Faithful_Geyser_Yellowstone_National_Park.jpg"
+                   alt="Old Faithful 老忠實間歇泉">
+              <div class="spot-title-zh">老忠實間歇泉</div>
+              <div class="spot-title-en">Old Faithful</div>
+              <div class="spot-tag">Day 5・必看噴泉 #2</div>
+              <div class="spot-info">
+                約每 90 分鐘噴發一次，建議先到遊客中心查詢噴發時間再安排動線。
+              </div>
+            </div>
 
-  /* 手機：2 欄 */
-  @media (max-width: 639px) {
-    .spot-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
+            <!-- 3. 黃石大峽谷 Artist Point -->
+            <div class="spot-card">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/ViewFromArtistPointYNP.jpg"
+                   alt="Yellowstone Canyon Artist Point 黃石大峽谷">
+              <div class="spot-title-zh">黃石大峽谷</div>
+              <div class="spot-title-en">Artist Point</div>
+              <div class="spot-tag">Day 7・必拍角度 #3</div>
+              <div class="spot-info">
+                黃石最經典視角，瀑布與峽谷一覽無遺，建議預留 1.5–2 小時慢慢拍。
+              </div>
+            </div>
 
-  /* 平板：3 欄 */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .spot-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
+            <!-- 4. 拉馬山谷 -->
+            <div class="spot-card">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bison_in_Lamar_Valley_%2853470574300%29.jpg/960px-Bison_in_Lamar_Valley_%2853470574300%29.jpg"
+                   alt="Lamar Valley 拉馬山谷 野牛">
+              <div class="spot-title-zh">拉馬山谷</div>
+              <div class="spot-title-en">Lamar Valley</div>
+              <div class="spot-tag">Day 6・野生動物天堂 #4</div>
+              <div class="spot-info">
+                被稱為「美國的塞倫蓋蒂」，傍晚時分是看野牛、麋鹿、狼的最佳時段。
+              </div>
+            </div>
 
-  /* 桌機：5 欄 */
-  @media (min-width: 1024px) {
-    .spot-grid {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-  }
-
-  .spot-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 12px 12px 14px;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-
-  .spot-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 38px rgba(15, 23, 42, 0.14);
-  }
-
-  .spot-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 10px;
-  }
-
-  .spot-title-zh {
-    font-weight: 700;
-    font-size: 0.98rem;
-    margin-bottom: 2px;
-    color: #111827;
-  }
-
-  .spot-title-en {
-    font-size: 0.8rem;
-    color: #6b7280;
-    margin-bottom: 6px;
-  }
-
-  .spot-tag {
-    align-self: flex-start;
-    font-size: 0.75rem;
-    padding: 2px 10px;
-    border-radius: 999px;
-    background: linear-gradient(120deg, #e0f2fe, #dcfce7);
-    color: #065f46;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-
-  .spot-info {
-    font-size: 0.8rem;
-    color: #4b5563;
-    margin-top: auto; /* 讓說明文字貼到底部，卡片高度比較一致 */
-  }
-</style>
-
-<div class="spot-grid-wrapper">
-  <div class="spot-grid">
-    <!-- 1. 大稜鏡溫泉 -->
-    <div class="spot-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Aerial_image_of_Grand_Prismatic_Spring_%28view_from_the_south%29.jpg"
-           alt="Grand Prismatic Spring 大稜鏡溫泉">
-      <div class="spot-title-zh">大稜鏡溫泉</div>
-      <div class="spot-title-en">Grand Prismatic Spring</div>
-      <div class="spot-tag">Day 5・必拍景點 #1</div>
-      <div class="spot-info">
-        北美最大溫泉，夢幻彩虹色，一定要走到觀景台俯瞰全景。
+            <!-- 5. 猛瑪溫泉 -->
+            <div class="spot-card">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Mammoth_Hot_Springs_Terraces_%2849200868386%29.jpg/960px-Mammoth_Hot_Springs_Terraces_%2849200868386%29.jpg"
+                   alt="Mammoth Hot Springs 猛瑪溫泉">
+              <div class="spot-title-zh">猛瑪溫泉</div>
+              <div class="spot-title-en">Mammoth Hot Springs</div>
+              <div class="spot-tag">Day 6・特色地貌 #5</div>
+              <div class="spot-info">
+                白色鈣華梯田，非常像土耳其棉堡，上下台地都值得走一圈。
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <!-- 2. 老忠實間歇泉（已換成可外連圖片） -->
-    <div class="spot-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Old_Faithful_Geyser_Yellowstone_National_Park.jpg/960px-Old_Faithful_Geyser_Yellowstone_National_Park.jpg
-
-"
-           alt="Old Faithful 老忠實間歇泉">
-      <div class="spot-title-zh">老忠實間歇泉</div>
-      <div class="spot-title-en">Old Faithful</div>
-      <div class="spot-tag">Day 5・必看噴泉 #2</div>
-      <div class="spot-info">
-        約每 90 分鐘噴發一次，建議先到遊客中心查詢噴發時間再安排動線。
-      </div>
-    </div>
-
-    <!-- 3. 黃石大峽谷 Artist Point -->
-    <div class="spot-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/ViewFromArtistPointYNP.jpg"
-           alt="Yellowstone Canyon Artist Point 黃石大峽谷">
-      <div class="spot-title-zh">黃石大峽谷</div>
-      <div class="spot-title-en">Artist Point</div>
-      <div class="spot-tag">Day 7・必拍角度 #3</div>
-      <div class="spot-info">
-        黃石最經典視角，瀑布與峽谷一覽無遺，建議預留 1.5–2 小時慢慢拍。
-      </div>
-    </div>
-
-    <!-- 4. 拉馬山谷 -->
-    <div class="spot-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bison_in_Lamar_Valley_%2853470574300%29.jpg/960px-Bison_in_Lamar_Valley_%2853470574300%29.jpg
-
-"
-           alt="Lamar Valley 拉馬山谷 野牛">
-      <div class="spot-title-zh">拉馬山谷</div>
-      <div class="spot-title-en">Lamar Valley</div>
-      <div class="spot-tag">Day 6・野生動物天堂 #4</div>
-      <div class="spot-info">
-        被稱為「美國的塞倫蓋蒂」，傍晚時分是看野牛、麋鹿、狼的最佳時段。
-      </div>
-    </div>
-
-    <!-- 5. 猛瑪溫泉 -->
-    <div class="spot-card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Mammoth_Hot_Springs_Terraces_%2849200868386%29.jpg/960px-Mammoth_Hot_Springs_Terraces_%2849200868386%29.jpg
-"
-           alt="Mammoth Hot Springs 猛瑪溫泉">
-      <div class="spot-title-zh">猛瑪溫泉</div>
-      <div class="spot-title-en">Mammoth Hot Springs</div>
-      <div class="spot-tag">Day 6・特色地貌 #5</div>
-      <div class="spot-info">
-        白色鈣華梯田，非常像土耳其棉堡，上下台地都值得走一圈。
-      </div>
-    </div>
-  </div>
-</div>
 
       <!-- 預算表（包在可滑動的容器內） -->
       <div class="section">
         <h2 class="section-title"><span class="emoji">💰</span>費用預算 (4人)</h2>
         <div class="table-wrap">
-        <table class="budget-table">
-          
-          <thead>
-            <tr><th>費用項目</th><th>經濟版</th><th>標準版</th><th>舒適版</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><strong>交通費用</strong></td><td>179,000</td><td>232,800</td><td>291,500</td></tr>
-            <tr><td style="padding-left: 30px;">→ 國際機票×4人</td><td>113,000</td><td>147,000</td><td>187,000</td></tr>
-            <tr><td style="padding-left: 30px;">→ 美國國內機票×4×2</td><td>32,000</td><td>43,000</td><td>53,000</td></tr>
-            <tr><td style="padding-left: 30px;">→ 租車+保險+油</td><td>30,000</td><td>37,500</td><td>45,000</td></tr>
+          <table class="budget-table">
+            <thead>
+              <tr><th>費用項目</th><th>經濟版</th><th>標準版</th><th>舒適版</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>交通費用</strong></td><td>179,000</td><td>232,800</td><td>291,500</td></tr>
+              <tr><td style="padding-left: 30px;">→ 國際機票×4人</td><td>113,000</td><td>147,000</td><td>187,000</td></tr>
+              <tr><td style="padding-left: 30px;">→ 美國國內機票×4×2</td><td>32,000</td><td>43,000</td><td>53,000</td></tr>
+              <tr><td style="padding-left: 30px;">→ 租車+保險+油</td><td>30,000</td><td>37,500</td><td>45,000</td></tr>
 
-            <tr><td><strong>住宿費用 (2間房)</strong></td><td>64,000</td><td>79,000</td><td>96,000</td></tr>
-            <tr><td><strong>餐飲費用 (多數自煮)</strong></td><td>35,400</td><td>43,000</td><td>52,400</td></tr>
-            <tr><td><strong>門票與活動</strong></td><td>3,100</td><td>5,800</td><td>9,100</td></tr>
-            <tr><td><strong>其他雜費</strong></td><td>11,500</td><td>17,200</td><td>23,000</td></tr>
+              <tr><td><strong>住宿費用 (2間房)</strong></td><td>64,000</td><td>79,000</td><td>96,000</td></tr>
+              <tr><td><strong>餐飲費用 (多數自煮)</strong></td><td>35,400</td><td>43,000</td><td>52,400</td></tr>
+              <tr><td><strong>門票與活動</strong></td><td>3,100</td><td>5,800</td><td>9,100</td></tr>
+              <tr><td><strong>其他雜費</strong></td><td>11,500</td><td>17,200</td><td>23,000</td></tr>
 
-            <tr class="budget-total"><td><strong>總費用 (4人)</strong></td><td><strong>290,300元</strong></td><td><strong>384,600元</strong></td><td><strong>485,500元</strong></td></tr>
-            <tr class="budget-highlight"><td><strong>平均每人</strong></td><td><strong>72,575元</strong></td><td><strong>96,150元</strong></td><td><strong>121,375元</strong></td></tr>
-          </tbody>
-        </table>
+              <tr class="budget-total"><td><strong>總費用 (4人)</strong></td><td><strong>290,300元</strong></td><td><strong>384,600元</strong></td><td><strong>485,500元</strong></td></tr>
+              <tr class="budget-highlight"><td><strong>平均每人</strong></td><td><strong>72,575元</strong></td><td><strong>96,150元</strong></td><td><strong>121,375元</strong></td></tr>
+            </tbody>
+          </table>
         </div>
 
         <div style="background: #d4edda; padding: 20px; border-radius: 10px; margin-top: 20px;">
@@ -401,17 +867,19 @@
       <div class="section">
         <h2 class="section-title"><span class="emoji">🏠</span>住宿安排 (4人需要2間房)</h2>
         <div class="table-wrap">
-        <table class="budget-table">
-          <thead><tr><th>日期</th><th>地點</th><th>住宿類型</th><th>備註</th></tr></thead>
-          <tbody>
-            <tr><td>Day 1-2</td><td>舊金山</td><td>2間雙床房 或 家庭套房</td><td>聯合廣場附近</td></tr>
-            <tr><td>Day 3</td><td>鹽湖城</td><td>2間雙床房</td><td>機場附近</td></tr>
-            <tr class="budget-total"><td><strong>Day 4-8</strong></td><td><strong>West Yellowstone</strong></td><td><strong>2房小木屋 (有廚房)</strong></td><td><strong>連住5晚,超重要!</strong></td></tr>
-            <tr><td>Day 9</td><td>Jackson</td><td>2間雙床房</td><td>Jackson小鎮</td></tr>
-            <tr><td>Day 10</td><td>鹽湖城</td><td>2間雙床房</td><td>機場附近</td></tr>
-            <tr><td>Day 11-12</td><td>舊金山</td><td>2間雙床房 或 家庭套房</td><td>聯合廣場附近</td></tr>
-          </tbody>
-        </table>
+          <table class="budget-table">
+            <thead>
+              <tr><th>日期</th><th>地點</th><th>住宿類型</th><th>備註</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Day 1-2</td><td>舊金山</td><td>2間雙床房 或 家庭套房</td><td>聯合廣場附近</td></tr>
+              <tr><td>Day 3</td><td>鹽湖城</td><td>2間雙床房</td><td>機場附近</td></tr>
+              <tr class="budget-total"><td><strong>Day 4-8</strong></td><td><strong>West Yellowstone</strong></td><td><strong>2房小木屋 (有廚房)</strong></td><td><strong>連住5晚,超重要!</strong></td></tr>
+              <tr><td>Day 9</td><td>Jackson</td><td>2間雙床房</td><td>Jackson小鎮</td></tr>
+              <tr><td>Day 10</td><td>鹽湖城</td><td>2間雙床房</td><td>機場附近</td></tr>
+              <tr><td>Day 11-12</td><td>舊金山</td><td>2間雙床房 或 家庭套房</td><td>聯合廣場附近</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
