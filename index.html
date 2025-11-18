@@ -169,123 +169,154 @@
       </div>
 
       <!-- 必看景點TOP 5 -->
-      <style>
-  .spot-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 16px;
-    margin: 24px 0;
+     <style>
+  /* 外層容器：置中＋預留左右空白 */
+  .spot-grid-wrapper {
+    max-width: 1120px;
+    margin: 32px auto 8px;
+    padding: 0 16px;
   }
 
+  .spot-grid {
+    display: grid;
+    gap: 20px;
+  }
+
+  /* 手機：2 欄 */
+  @media (max-width: 639px) {
+    .spot-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* 平板：3 欄 */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .spot-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* 桌機：5 欄 */
   @media (min-width: 1024px) {
     .spot-grid {
-      grid-template-columns: repeat(5, 1fr); /* 桌機 5 欄 */
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
 
   .spot-card {
     background: #ffffff;
-    border-radius: 12px;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.5;
+    border-radius: 16px;
+    padding: 12px 12px 14px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .spot-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 38px rgba(15, 23, 42, 0.14);
   }
 
   .spot-card img {
     width: 100%;
-    height: 140px;
+    height: 150px;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 8px;
+    border-radius: 12px;
+    margin-bottom: 10px;
   }
 
   .spot-title-zh {
     font-weight: 700;
+    font-size: 0.98rem;
     margin-bottom: 2px;
+    color: #111827;
   }
 
   .spot-title-en {
-    font-size: 12px;
-    color: #555;
+    font-size: 0.8rem;
+    color: #6b7280;
     margin-bottom: 6px;
   }
 
   .spot-tag {
-    display: inline-block;
-    font-size: 12px;
-    padding: 2px 8px;
+    align-self: flex-start;
+    font-size: 0.75rem;
+    padding: 2px 10px;
     border-radius: 999px;
-    background: #e5f3ff;
-    color: #135d7a;
-    margin-bottom: 4px;
+    background: linear-gradient(120deg, #e0f2fe, #dcfce7);
+    color: #065f46;
+    font-weight: 500;
+    margin-bottom: 6px;
   }
 
   .spot-info {
-    font-size: 12px;
-    color: #555;
+    font-size: 0.8rem;
+    color: #4b5563;
+    margin-top: auto; /* 讓說明文字貼到底部，卡片高度比較一致 */
   }
 </style>
 
-<div class="spot-grid">
-  <!-- 1. 大稜鏡溫泉 -->
-  <div class="spot-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Aerial_image_of_Grand_Prismatic_Spring_%28view_from_the_south%29.jpg"
-         alt="Grand Prismatic Spring 大稜鏡溫泉">
-    <div class="spot-title-zh">大稜鏡溫泉</div>
-    <div class="spot-title-en">Grand Prismatic Spring</div>
-    <div class="spot-tag">Day 5・必拍景點 #1</div>
-    <div class="spot-info">
-      北美最大溫泉，夢幻彩虹色，一定要走到觀景台俯瞰全景。
+<div class="spot-grid-wrapper">
+  <div class="spot-grid">
+    <!-- 1. 大稜鏡溫泉 -->
+    <div class="spot-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Aerial_image_of_Grand_Prismatic_Spring_%28view_from_the_south%29.jpg"
+           alt="Grand Prismatic Spring 大稜鏡溫泉">
+      <div class="spot-title-zh">大稜鏡溫泉</div>
+      <div class="spot-title-en">Grand Prismatic Spring</div>
+      <div class="spot-tag">Day 5・必拍景點 #1</div>
+      <div class="spot-info">
+        北美最大溫泉，夢幻彩虹色，一定要走到觀景台俯瞰全景。
+      </div>
     </div>
-  </div>
 
-  <!-- 2. 老忠實間歇泉 -->
-  <div class="spot-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Old_Faithful_Geyser%2C_Yellowstone_NP%2C_US_-_Diliff.jpg"
-         alt="Old Faithful 老忠實間歇泉">
-    <div class="spot-title-zh">老忠實間歇泉</div>
-    <div class="spot-title-en">Old Faithful</div>
-    <div class="spot-tag">Day 5・必看噴泉 #2</div>
-    <div class="spot-info">
-      約每 90 分鐘噴發一次，建議先到遊客中心查詢噴發時間再安排動線。
+    <!-- 2. 老忠實間歇泉（已換成可外連圖片） -->
+    <div class="spot-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Old_Faithful_Geyser_-_Yellowstone.jpg"
+           alt="Old Faithful 老忠實間歇泉">
+      <div class="spot-title-zh">老忠實間歇泉</div>
+      <div class="spot-title-en">Old Faithful</div>
+      <div class="spot-tag">Day 5・必看噴泉 #2</div>
+      <div class="spot-info">
+        約每 90 分鐘噴發一次，建議先到遊客中心查詢噴發時間再安排動線。
+      </div>
     </div>
-  </div>
 
-  <!-- 3. 黃石大峽谷 Artist Point -->
-  <div class="spot-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/ViewFromArtistPointYNP.jpg"
-         alt="Yellowstone Canyon Artist Point 黃石大峽谷">
-    <div class="spot-title-zh">黃石大峽谷</div>
-    <div class="spot-title-en">Artist Point</div>
-    <div class="spot-tag">Day 7・必拍角度 #3</div>
-    <div class="spot-info">
-      黃石最經典視角，瀑布＋峽谷一覽無遺，建議預留 1.5–2 小時慢慢拍。
+    <!-- 3. 黃石大峽谷 Artist Point -->
+    <div class="spot-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/ViewFromArtistPointYNP.jpg"
+           alt="Yellowstone Canyon Artist Point 黃石大峽谷">
+      <div class="spot-title-zh">黃石大峽谷</div>
+      <div class="spot-title-en">Artist Point</div>
+      <div class="spot-tag">Day 7・必拍角度 #3</div>
+      <div class="spot-info">
+        黃石最經典視角，瀑布與峽谷一覽無遺，建議預留 1.5–2 小時慢慢拍。
+      </div>
     </div>
-  </div>
 
-  <!-- 4. 拉馬山谷 -->
-  <div class="spot-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Bison_in_Lamar_Valley.jpg"
-         alt="Lamar Valley 拉馬山谷 野牛">
-    <div class="spot-title-zh">拉馬山谷</div>
-    <div class="spot-title-en">Lamar Valley</div>
-    <div class="spot-tag">Day 6・野生動物天堂 #4</div>
-    <div class="spot-info">
-      被稱為「美國的塞倫蓋蒂」，傍晚時分是看野牛、麋鹿、狼的最佳時段。
+    <!-- 4. 拉馬山谷 -->
+    <div class="spot-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Bison_in_Lamar_Valley.jpg"
+           alt="Lamar Valley 拉馬山谷 野牛">
+      <div class="spot-title-zh">拉馬山谷</div>
+      <div class="spot-title-en">Lamar Valley</div>
+      <div class="spot-tag">Day 6・野生動物天堂 #4</div>
+      <div class="spot-info">
+        被稱為「美國的塞倫蓋蒂」，傍晚時分是看野牛、麋鹿、狼的最佳時段。
+      </div>
     </div>
-  </div>
 
-  <!-- 5. 猛瑪溫泉 Mammoth Hot Springs -->
-  <div class="spot-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Mammoth_Hot_Springs_terraces_2016.jpg"
-         alt="Mammoth Hot Springs 猛瑪溫泉">
-    <div class="spot-title-zh">猛瑪溫泉</div>
-    <div class="spot-title-en">Mammoth Hot Springs</div>
-    <div class="spot-tag">Day 6・特色地貌 #5</div>
-    <div class="spot-info">
-      白色鈣華梯田，非常像土耳其棉堡，上下台地都值得走一圈。
+    <!-- 5. 猛瑪溫泉 -->
+    <div class="spot-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Mammoth_Hot_Springs_terraces_2016.jpg"
+           alt="Mammoth Hot Springs 猛瑪溫泉">
+      <div class="spot-title-zh">猛瑪溫泉</div>
+      <div class="spot-title-en">Mammoth Hot Springs</div>
+      <div class="spot-tag">Day 6・特色地貌 #5</div>
+      <div class="spot-info">
+        白色鈣華梯田，非常像土耳其棉堡，上下台地都值得走一圈。
+      </div>
     </div>
   </div>
 </div>
