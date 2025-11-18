@@ -331,44 +331,7 @@
         <h2 class="section-title"><span class="emoji">💰</span>費用預算 (4人)</h2>
         <div class="table-wrap">
         <table class="budget-table">
-          /* 讓預算表在小螢幕可以左右滑動 */
-.table-wrap {
-  position: relative;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* 讓表格至少有一定寬度，才會出現橫向卷軸 */
-.budget-table {
-  min-width: 520px; /* 可依需要微調 */
-}
-
-/* 手機版顯示「可滑動」提示，桌機不顯示 */
-@media (max-width: 768px) {
-  .table-wrap::after {
-    content: "← 左右滑動看完整費用";
-    position: absolute;
-    top: 8px;
-    right: 16px;
-    font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: linear-gradient(120deg, #6366f1, #a855f7); /* 跟你網站紫色系接近 */
-    color: #fff;
-    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
-    pointer-events: none;
-    white-space: nowrap;
-    animation: fadeOutHint 4s forwards;
-  }
-}
-
-/* 提示幾秒後淡出，不會一直擋畫面 */
-@keyframes fadeOutHint {
-  0% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
+          
           <thead>
             <tr><th>費用項目</th><th>經濟版</th><th>標準版</th><th>舒適版</th></tr>
           </thead>
