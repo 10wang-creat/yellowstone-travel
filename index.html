@@ -169,60 +169,126 @@
       </div>
 
       <!-- 必看景點TOP 5 -->
-      <div class="section">
-        <h2 class="section-title"><span class="emoji">⭐</span>黃石公園必看景點 TOP 5</h2>
-        <div class="attractions">
-          <div class="attraction-card">
-            <div class="attraction-header" style="background:linear-gradient(135deg,#f093fb 0%, #f5576c 100%);">
-              <div class="rank">#1</div><div class="name">大稜鏡溫泉</div><div>Grand Prismatic Spring</div>
-            </div>
-            <div class="attraction-body">
-              <div class="attraction-rating">★★★★★</div>
-              <div class="attraction-info"><strong>特色:</strong> 北美最大溫泉,彩虹色彩超夢幻<br><strong>行程:</strong> Day 5<br><strong>停留:</strong> 1.5小時<br><strong>提示:</strong> 一定要走到觀景台俯瞰全景!</div>
-            </div>
-          </div>
+      <style>
+  .spot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
 
-          <div class="attraction-card">
-            <div class="attraction-header" style="background:linear-gradient(135deg,#fa709a 0%, #fee140 100%);">
-              <div class="rank">#2</div><div class="name">老忠實間歇泉</div><div>Old Faithful</div>
-            </div>
-            <div class="attraction-body">
-              <div class="attraction-rating">★★★★★</div>
-              <div class="attraction-info"><strong>特色:</strong> 每90分鐘噴發一次,超準時<br><strong>行程:</strong> Day 5<br><strong>停留:</strong> 1.5小時<br><strong>提示:</strong> 先到遊客中心查詢噴發時間</div>
-            </div>
-          </div>
+  @media (min-width: 1024px) {
+    .spot-grid {
+      grid-template-columns: repeat(5, 1fr); /* 桌機 5 欄 */
+    }
+  }
 
-          <div class="attraction-card">
-            <div class="attraction-header" style="background:linear-gradient(135deg,#30cfd0 0%, #330867 100%);">
-              <div class="rank">#3</div><div class="name">黃石大峽谷</div><div>Artist Point</div>
-            </div>
-            <div class="attraction-body">
-              <div class="attraction-rating">★★★★★</div>
-              <div class="attraction-info"><strong>特色:</strong> 黃石最經典角度,必拍!<br><strong>行程:</strong> Day 7<br><strong>停留:</strong> 2小時<br><strong>提示:</strong> Artist Point是最佳拍攝點</div>
-            </div>
-          </div>
+  .spot-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+  }
 
-          <div class="attraction-card">
-            <div class="attraction-header" style="background:linear-gradient(135deg,#a8edea 0%, #fed6e3 100%);">
-              <div class="rank">#4</div><div class="name">拉馬山谷</div><div>Lamar Valley</div>
-            </div>
-            <div class="attraction-body">
-              <div class="attraction-rating">★★★★★</div>
-              <div class="attraction-info"><strong>特色:</strong> 🦌麋鹿交配季!美國塞倫蓋蒂<br><strong>行程:</strong> Day 6<br><strong>停留:</strong> 2-3小時<br><strong>提示:</strong> 傍晚最佳,帶望遠鏡!</div>
-            </div>
-          </div>
+  .spot-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
 
-          <div class="attraction-card">
-            <div class="attraction-header" style="background:linear-gradient(135deg,#ff9a9e 0%, #fecfef 100%);">
-              <div class="rank">#5</div><div class="name">猛瑪溫泉</div><div>Mammoth Hot Springs</div>
-            </div>
-            <div class="attraction-body">
-              <div class="attraction-rating">★★★★★</div>
-              <div class="attraction-info"><strong>特色:</strong> 白色鈣華梯田,像土耳其棉堡<br><strong>行程:</strong> Day 6<br><strong>停留:</strong> 2小時<br><strong>提示:</strong> 上下台地都要看!</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  .spot-title-zh {
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .spot-title-en {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+
+  .spot-tag {
+    display: inline-block;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #e5f3ff;
+    color: #135d7a;
+    margin-bottom: 4px;
+  }
+
+  .spot-info {
+    font-size: 12px;
+    color: #555;
+  }
+</style>
+
+<div class="spot-grid">
+  <!-- 1. 大稜鏡溫泉 -->
+  <div class="spot-card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Aerial_image_of_Grand_Prismatic_Spring_%28view_from_the_south%29.jpg"
+         alt="Grand Prismatic Spring 大稜鏡溫泉">
+    <div class="spot-title-zh">大稜鏡溫泉</div>
+    <div class="spot-title-en">Grand Prismatic Spring</div>
+    <div class="spot-tag">Day 5・必拍景點 #1</div>
+    <div class="spot-info">
+      北美最大溫泉，夢幻彩虹色，一定要走到觀景台俯瞰全景。
+    </div>
+  </div>
+
+  <!-- 2. 老忠實間歇泉 -->
+  <div class="spot-card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Old_Faithful_Geyser%2C_Yellowstone_NP%2C_US_-_Diliff.jpg"
+         alt="Old Faithful 老忠實間歇泉">
+    <div class="spot-title-zh">老忠實間歇泉</div>
+    <div class="spot-title-en">Old Faithful</div>
+    <div class="spot-tag">Day 5・必看噴泉 #2</div>
+    <div class="spot-info">
+      約每 90 分鐘噴發一次，建議先到遊客中心查詢噴發時間再安排動線。
+    </div>
+  </div>
+
+  <!-- 3. 黃石大峽谷 Artist Point -->
+  <div class="spot-card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/ViewFromArtistPointYNP.jpg"
+         alt="Yellowstone Canyon Artist Point 黃石大峽谷">
+    <div class="spot-title-zh">黃石大峽谷</div>
+    <div class="spot-title-en">Artist Point</div>
+    <div class="spot-tag">Day 7・必拍角度 #3</div>
+    <div class="spot-info">
+      黃石最經典視角，瀑布＋峽谷一覽無遺，建議預留 1.5–2 小時慢慢拍。
+    </div>
+  </div>
+
+  <!-- 4. 拉馬山谷 -->
+  <div class="spot-card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Bison_in_Lamar_Valley.jpg"
+         alt="Lamar Valley 拉馬山谷 野牛">
+    <div class="spot-title-zh">拉馬山谷</div>
+    <div class="spot-title-en">Lamar Valley</div>
+    <div class="spot-tag">Day 6・野生動物天堂 #4</div>
+    <div class="spot-info">
+      被稱為「美國的塞倫蓋蒂」，傍晚時分是看野牛、麋鹿、狼的最佳時段。
+    </div>
+  </div>
+
+  <!-- 5. 猛瑪溫泉 Mammoth Hot Springs -->
+  <div class="spot-card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Mammoth_Hot_Springs_terraces_2016.jpg"
+         alt="Mammoth Hot Springs 猛瑪溫泉">
+    <div class="spot-title-zh">猛瑪溫泉</div>
+    <div class="spot-title-en">Mammoth Hot Springs</div>
+    <div class="spot-tag">Day 6・特色地貌 #5</div>
+    <div class="spot-info">
+      白色鈣華梯田，非常像土耳其棉堡，上下台地都值得走一圈。
+    </div>
+  </div>
+</div>
 
       <!-- 預算表（包在可滑動的容器內） -->
       <div class="section">
